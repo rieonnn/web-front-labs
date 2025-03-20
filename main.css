@@ -1,0 +1,40 @@
+body {
+    background-color: beige;
+    color: maroon;
+    font-family: Arial;
+    margin: 0px;
+}
+
+header {
+    background-color:rgb(92, 84, 79);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-family: Georgia;
+    font-size: 14px;
+}
+
+main {
+    background-color: beige;
+    color: rgb(54, 52, 52);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+footer {
+    background-color:rgb(92, 84, 79);
+    color: white;
+    padding: 20px;
+    text-align: right;
+    font-family: Georgia;
+    font-size: 14px;
+}
+
+a {
+    color: #4A90E2;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #3E8EDE;
+}
