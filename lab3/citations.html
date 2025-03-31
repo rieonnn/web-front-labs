@@ -9,26 +9,83 @@
     <link rel="icon" href="../favicon-32x32.png">
     <link rel="icon" href="../favicon-48x48.png">
     <style>
-        .citations {
-        border: 1px solid red;
-        padding: 20px;
-        border-radius: 10px;
-        margin: 20px;
-        box-shadow: 10 px 10 px 5 px #0002;
-        background: linear-gradient(to right top, red, orange, yellow, green, indigo, blue, purple );
+        .citation {
+            border: 1px solid red;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 10 px 10 px 5 px #0002;
+            background: linear-gradient(to right top, red, orange, yellow, green, indigo, blue, purple );
         }
         .text {
-        font-size: 30px;
-        font-weight: bold;
-        text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
         }
         .author {
-        text-align: left;
-        font-size: 30px;
-        opacity: 0.8;
-        margin-top: 30px;
-        margin-left: 50%;
+            text-align: left;
+            font-size: 30px;
+            opacity: 0.8;
+            margin-top: 30px;
+            margin-left: 50%;
         }
+        .q {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(58, 36, 36, 0.3);
+            color: white;
+            border: 2px solid transparent;
+            line-height: 1.5;
+            margin: 15px;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .q:hover{
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+            transform: translateY(-5px); 
+        }
+        .q1 {
+            background: linear-gradient(to left, #ff512f, #dd2476);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            margin-left: 15px;
+        }
+        .q2 {
+            background: linear-gradient(to top, #00c6ff, #0072ff);
+            text-shadow: 3px 4px 4px rgba(30, 6, 82, 0,3);
+            margin-bottom: 10px;
+        }
+        .q3 {
+            background: linear-gradient(to bottom, #ff758c, #ff7eb3);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .q4 {
+            background: linear-gradient(to right bottom, #fceabb, #f8b500);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .q5 {
+            background: linear-gradient(to left top, #a18cd1, #fbc2eb);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .q6 {
+            background: linear-gradient(to left bottom, #ff9966, #ff5e62);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .q7 {
+            background: linear-gradient(to right, #3a6073, #3a9473);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .q8 {
+            background: linear-gradient(to right, #4776e6, #8e54e9);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .q9 {
+            background: linear-gradient(to right, #ffefba, #ffffff);
+            text-shadow: 1px 1px 2px rgba(84, 63, 63, 0.5);
+        }
+        .q10 {
+            background: linear-gradient(to right, #ffdd00, #fc00ff);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
     </style>
 </head>
 <body>
@@ -37,7 +94,7 @@
     </header>
 
     <main>
-        <div class="citations">
+        <div class="citation">
             <div class="text">
                 Стремитесь не к успеху, а к ценностям, которые он дает.
             </div>
@@ -45,6 +102,97 @@
                 Альберт Эйнштейн
             </div>
         </div>
+
+        <div class="q q1">
+            <div class="text">
+                Секрет успеха в том, чтобы начать.
+            </div>
+            <div class="authot">
+                Марк Твен
+            </div>
+        </div>
+
+        <div class="q q2">
+            <div class="text">
+                Единственное, что мы имеем, это сейчас.
+            </div>
+            <div class="authot">
+                Лао Цзы
+            </div>
+        </div>
+
+        <div class="q q3">
+            <div class="text">
+                Жизнь — это то, что происходит, пока вы заняты строить другие планы.
+            </div>
+            <div class="authot">
+                Джон Леннон
+            </div>
+        </div>
+
+        <div class="q q4">
+            <div class="text">
+                Счастье — это не конечный пункт назначения, а способ путешествия.
+            </div>
+            <div class="authot">
+                Элаин Филдс
+            </div>
+        </div>
+
+        <div class="q q5">
+            <div class="text">
+                Только те, кто рискнул далеко зайти, могут узнать, насколько далеко можно зайти.
+            </div>
+            <div class="authot">
+                Т. С. Элиот
+            </div>
+        </div>
+
+        <div class="q q6">
+            <div class="text">
+                Лучше быть ненавидимым за то, кто вы есть, чем любимым за то, кем вы не являетесь.
+            </div>
+            <div class="authot">
+                Андре Жид
+            </div>
+        </div>
+
+        <div class="q q7">
+            <div class="text">
+                Будьте тем изменением, которое вы хотите видеть в мире.
+            </div>
+            <div class="authot">
+                Махатма Ганди
+            </div>
+        </div>
+
+        <div class="q q8">
+            <div class="text">
+                Воображение важнее знания.
+            </div>
+            <div class="authot">
+                Альберт Эйнштейн
+            </div>
+        </div>
+
+        <div class="q q9">
+            <div class="text">
+                Я поднялась. Я горжусь. Я снова вернусь, чтобы подняться и стать сильнее.
+            </div>
+            <div class="authot">
+                Майя Ангелу
+            </div>
+        </div>
+
+        <div class="q q10">
+            <div class="text">
+                Ваше время ограничено, не тратьте его, живя чужой жизнью.
+            </div>
+            <div class="authot">
+                Стив Джобс
+            </div>
+        </div>
+
     </main>
 
     <footer>
