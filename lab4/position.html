@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреева Ирина. Позиционирование</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-48x48.png">
+</head>
+
+<style>
+    div {
+        width: 300px;
+        height: 70px;
+        line-height: 70px;
+        text-align: center;
+        background-color: white;
+        border: 1px dotted darkgreen;
+        margin: 15px;
+    }
+    .static {
+        position: relative;
+        z-index: 1;
+    }
+    .position-relative {
+        position: relative;
+        z-index: 0;
+        left: 138px;
+        top: -130px;
+        transition: 1s;
+    }
+    .position-relative:hover {
+        position: relative;
+        z-index: 2;
+        background-color: white;
+    }
+    .position-absolute {
+        position: absolute;
+        z-index: 0;
+        left: 300px;
+        transition: 1s;
+    }
+    .position-absolute:hover {
+        position: absolute;
+        z-index: 2;
+        left: 300px;
+        width: 400px;
+        height: 90px;
+        background-color: bisque;
+        box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.5);
+    }
+</style>
+
+<body>
+    <header>
+        НГТУ, ФБ, Лабораторная 4
+    </header>
+
+    <main>
+        <div class="static">static</div>
+        <div class="static">static</div>
+        <div class="position-relative">relative</div>
+        <div class="static">static</div>
+        <div class="static">static</div>
+        <div class="position-absolute">absolute</div>
+        <div class="static">static</div>
+        <div class="static">static</div>
+        <div class="static">static</div>
+        <div class="static">static</div>
+    </main>
+
+    <footer>
+        &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
+    </footer>
+
+</body>
+</html>
