@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреева Ирина. Прогресс</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-48x48.png">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: rgb(174, 167, 151);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .progress-container {
+      border: 1px solid brown;
+      padding: 30px;
+      background-color: #d3e5e8;
+      text-align: center;
+      width: 400px;
+    }
+
+    .progress-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: brown;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 20px;
+      border: 1px solid brown;
+      background-color: white;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar-fill {
+      background-color: rgb(183, 227, 88);
+      height: 100%;
+      width: 0%;
+      transition: width 0.05s linear;
+    }
+
+    .progress-button {
+      padding: 10px 20px;
+      background-color: rgb(75, 6, 28);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+      transition: box-shadow 0.2s ease;
+    }
+
+    .progress-button:hover {
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+    }
+
+    .progress-button:active {
+      box-shadow: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress-container">
+  <div class="progress-title">Степень прогресса</div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="bar"></div>
+  </div>
+  <button class="progress-button" id="progressBtn">Нажмите и удерживайте</button>
+</div>
+
+<script>
+  const bar = document.getElementById('bar');
+  const button = document.getElementById('progressBtn');
+  let interval;
+  let progress = 0;
+
+  button.addEventListener('mousedown', () => {
+    progress = 0;
+    bar.style.width = '0%';
+
+    interval = setInterval(() => {
+      if (progress >= 100) {
+        clearInterval(interval);
+      } else {
+        progress += 2; // 100% за 5 секунд = 20 шагов по 2% каждые 100мс
+        bar.style.width = progress + '%';
+      }
+    }, 100);
+  });
+
+  button.addEventListener('mouseup', () => {
+    clearInterval(interval);
+  });
+
+  button.addEventListener('mouseleave', () => {
+    clearInterval(interval);
+  });
+</script>
+
+<footer>
+    &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
+</footer>
+
+</body>
+</html>
