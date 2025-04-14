@@ -9,14 +9,14 @@
     <link rel="icon" href="../favicon-32x32.png">
     <link rel="icon" href="../favicon-48x48.png">
 <style>
-     body {
+    .body {
         font-family: Arial, sans-serif;
         background: #f9f9f9;
         overflow: hidden;
         height: 100vh;
         margin: 0;
         position: relative;
-    }
+        }
 
     .tag {
         position: absolute;
@@ -28,13 +28,33 @@
         transform: rotate(var(--rotate));
         font-size: var(--size);
         z-index: 1;
-    }
+        animation: float var(--duration) ease-in-out infinite;
+        }
+
+    @keyframes float {
+        0% {
+            transform: translate(var(--startX), var(--startY)) rotate(var(--rotate));
+        }
+        25% {
+            transform: translate(var(--midX), var(--midY)) rotate(var(--rotate));
+        }
+        50% {
+            transform: translate(var(--endX), var(--endY)) rotate(var(--rotate));
+        }
+        75% {
+            transform: translate(var(--midX), var(--midY)) rotate(var(--rotate));
+        }
+        100% {
+            transform: translate(var(--startX), var(--startY)) rotate(var(--rotate));
+        }
+        }
 
     .tag:hover {
         transform: scale(1.5) rotate(0deg);
         box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         z-index: 999;
-    }
+        animation-play-state: paused; /* При наведении анимация приостанавливается */
+        }
 
 </style>
 </head>
@@ -43,22 +63,155 @@
         НГТУ, ФБ, Лабораторная 4
     </header>
 
-    <div class="tag" style="top: 10%; left: 5%; background: #e74c3c; --size: 24px; --rotate: -15deg;">HTML</div>
-    <div class="tag" style="top: 15%; left: 25%; background: #8e44ad; --size: 18px; --rotate: 10deg;">CSS</div>
-    <div class="tag" style="top: 20%; left: 60%; background: #3498db; --size: 28px; --rotate: 5deg;">JavaScript</div>
-    <div class="tag" style="top: 30%; left: 40%; background: #1abc9c; --size: 20px; --rotate: -10deg;">React</div>
-    <div class="tag" style="top: 35%; left: 15%; background: #f39c12; --size: 22px; --rotate: 25deg;">Vue</div>
-    <div class="tag" style="top: 40%; left: 70%; background: #d35400; --size: 26px; --rotate: -20deg;">Angular</div>
-    <div class="tag" style="top: 45%; left: 30%; background: #2ecc71; --size: 16px; --rotate: 5deg;">Node.js</div>
-    <div class="tag" style="top: 50%; left: 50%; background: #9b59b6; --size: 20px; --rotate: 15deg;">Express</div>
-    <div class="tag" style="top: 55%; left: 20%; background: #2980b9; --size: 22px; --rotate: -5deg;">MongoDB</div>
-    <div class="tag" style="top: 60%; left: 65%; background: #27ae60; --size: 18px; --rotate: -10deg;">Python</div>
-    <div class="tag" style="top: 65%; left: 35%; background: #c0392b; --size: 24px; --rotate: 10deg;">Django</div>
-    <div class="tag" style="top: 70%; left: 10%; background: #34495e; --size: 16px; --rotate: 15deg;">Flask</div>
-    <div class="tag" style="top: 75%; left: 55%; background: #7f8c8d; --size: 26px; --rotate: -10deg;">SQL</div>
-    <div class="tag" style="top: 80%; left: 25%; background: #e67e22; --size: 20px; --rotate: 5deg;">PHP</div>
-    <div class="tag" style="top: 85%; left: 45%; background: #16a085; --size: 22px; --rotate: -15deg;">Laravel</div>
+    <div class="tag" style="
+    top: 10%; left: 5%;
+    background: #e74c3c;
+    --size: 24px;
+    --rotate: -15deg;
+    --startX: 0px; --startY: 0px;
+    --midX: 50px; --midY: 50px;
+    --endX: 200px; --endY: 150px;
+    --duration: 8s;">HTML</div>
 
+  <div class="tag" style="
+    top: 15%; left: 25%;
+    background: #8e44ad;
+    --size: 18px;
+    --rotate: 10deg;
+    --startX: 0px; --startY: 0px;
+    --midX: -50px; --midY: -50px;
+    --endX: -200px; --endY: -150px;
+    --duration: 10s;">CSS</div>
+
+  <div class="tag" style="
+    top: 20%; left: 60%;
+    background: #3498db;
+    --size: 28px;
+    --rotate: 5deg;
+    --startX: 0px; --startY: 0px;
+    --midX: 100px; --midY: 100px;
+    --endX: 250px; --endY: -100px;
+    --duration: 9s;">JavaScript</div>
+
+  <div class="tag" style="
+    top: 30%; left: 40%;
+    background: #1abc9c;
+    --size: 20px;
+    --rotate: -10deg;
+    --startX: 0px; --startY: 0px;
+    --midX: -70px; --midY: 50px;
+    --endX: 150px; --endY: 200px;
+    --duration: 12s;">React</div>
+
+  <div class="tag" style="
+    top: 35%; left: 15%;
+    background: #f39c12;
+    --size: 22px;
+    --rotate: 25deg;
+    --startX: 0px; --startY: 0px;
+    --midX: 200px; --midY: -100px;
+    --endX: -150px; --endY: 200px;
+    --duration: 11s;">Vue</div>
+
+  <div class="tag" style="
+    top: 40%; left: 70%;
+    background: #d35400;
+    --size: 26px;
+    --rotate: -20deg;
+    --startX: 0px; --startY: 0px;
+    --midX: -150px; --midY: 100px;
+    --endX: 100px; --endY: -250px;
+    --duration: 15s;">Angular</div>
+
+  <div class="tag" style="
+    top: 45%; left: 30%;
+    background: #2ecc71;
+    --size: 16px;
+    --rotate: 5deg;
+    --startX: 0px; --startY: 0px;
+    --midX: 100px; --midY: 50px;
+    --endX: 200px; --endY: -100px;
+    --duration: 14s;">Node.js</div>
+
+  <div class="tag" style="
+    top: 50%; left: 50%;
+    background: #9b59b6;
+    --size: 20px;
+    --rotate: 15deg;
+    --startX: 0px; --startY: 0px;
+    --midX: -50px; --midY: 100px;
+    --endX: 150px; --endY: 150px;
+    --duration: 8s;">Express</div>
+
+  <div class="tag" style="
+    top: 55%; left: 20%;
+    background: #2980b9;
+    --size: 22px;
+    --rotate: -5deg;
+    --startX: 0px; --startY: 0px;
+    --midX: -100px; --midY: -200px;
+    --endX: 50px; --endY: 250px;
+    --duration: 10s;">MongoDB</div>
+
+  <div class="tag" style="
+    top: 60%; left: 65%;
+    background: #27ae60;
+    --size: 18px;
+    --rotate: -10deg;
+    --startX: 0px; --startY: 0px;
+    --midX: -100px; --midY: 100px;
+    --endX: 300px; --endY: -150px;
+    --duration: 9s;">Python</div>
+
+  <div class="tag" style="
+    top: 65%; left: 35%;
+    background: #c0392b;
+    --size: 24px;
+    --rotate: 10deg;
+    --startX: 0px; --startY: 0px;
+    --midX: 200px; --midY: -50px;
+    --endX: -150px; --endY: 100px;
+    --duration: 12s;">Django</div>
+
+  <div class="tag" style="
+    top: 70%; left: 10%;
+    background: #34495e;
+    --size: 16px;
+    --rotate: 15deg;
+    --startX: 0px; --startY: 0px;
+    --midX: 150px; --midY: -150px;
+    --endX: -100px; --endY: 250px;
+    --duration: 11s;">Flask</div>
+
+  <div class="tag" style="
+    top: 75%; left: 55%;
+    background: #7f8c8d;
+    --size: 26px;
+    --rotate: -10deg;
+    --startX: 0px; --startY: 0px;
+    --midX: 100px; --midY: -100px;
+    --endX: 50px; --endY: 200px;
+    --duration: 14s;">SQL</div>
+
+  <div class="tag" style="
+    top: 80%; left: 25%;
+    background: #e67e22;
+    --size: 20px;
+    --rotate: 5deg;
+    --startX: 0px; --startY: 0px;
+    --midX: -150px; --midY: 50px;
+    --endX: 250px; --endY: -100px;
+    --duration: 10s;">PHP</div>
+
+  <div class="tag" style="
+    top: 85%; left: 45%;
+    background: #16a085;
+    --size: 22px;
+    --rotate: -15deg;
+    --startX: 0px; --startY: 0px;
+    --midX: 50px; --midY: -100px;
+    --endX: -200px; --endY: 200px;
+    --duration: 13s;">Laravel</div>
     <footer>
         &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
     </footer>
