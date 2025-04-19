@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреева Ирина Александровна. Корзина товаров</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-48x48.png">
+
+    <script>
+        function calculateTotal() {
+            const prices = {
+                apples: 100,
+                pears: 80,
+                oranges: 150,
+                melons: 300,
+                bananas: 60
+            };
+
+            let total = 0;
+
+            total += (parseInt(document.getElementById("apples").value) || 0) * prices.apples;
+            total += (parseInt(document.getElementById("pears").value) || 0) * prices.pears;
+            total += (parseInt(document.getElementById("oranges").value) || 0) * prices.oranges;
+            total += (parseInt(document.getElementById("melons").value) || 0) * prices.melons;
+            total += (parseInt(document.getElementById("bananas").value) || 0) * prices.bananas;
+
+            document.getElementById("total").textContent = "Общая цена: " + total + " р";
+        }
+
+        function clearCart() {
+            document.getElementById("apples").value = "";
+            document.getElementById("pears").value = "";
+            document.getElementById("oranges").value = "";
+            document.getElementById("melons").value = "";
+            document.getElementById("bananas").value = "";
+            document.getElementById("total").textContent = "";
+        }
+
+        function showAuthor() {
+            alert("Автор страницы: Андреева Ирина Александровна");
+        }
+
+        function showPhrase() {
+            alert("Пусть каждый день приносит вам удачу и радость!");
+        }
+    </script>
+
+    <style>
+        .cart {
+            width: 320px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: rgb(181, 184, 185);
+            border: 2px solid #555;
+            border-radius: 10px;
+        }
+
+        .cart h2 {
+            text-align: center;
+            color: maroon;
+        }
+
+        .cart label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        .cart input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        .cart button {
+            margin-top: 10px;
+            margin-right: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #total {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, Лабораторная 5
+    </header>
+
+    <main>
+        <div class="cart">
+            <h2>Корзина товаров</h2>
+
+            <label>Яблоки (100р/шт):
+                <input type="number" id="apples" min="0" placeholder="Введите количество яблок">
+            </label>
+
+            <label>Груши (80р/шт):
+                <input type="number" id="pears" min="0" placeholder="Введите количество груш">
+            </label>
+
+            <label>Апельсины (150р/шт):
+                <input type="number" id="oranges" min="0" placeholder="Введите количество апельсинов">
+            </label>
+
+            <label>Дыни (300р/шт):
+                <input type="number" id="melons" min="0" placeholder="Введите количество дынь">
+            </label>
+
+            <label>Бананы (60р/шт):
+                <input type="number" id="bananas" min="0" placeholder="Введите количество бананов">
+            </label>
+
+            <button onclick="calculateTotal()">Рассчитать</button>
+            <button onclick="clearCart()">Очистить</button>
+
+            <p id="total"></p>
+        </div>
+    </main>
+
+    <footer>
+        &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
