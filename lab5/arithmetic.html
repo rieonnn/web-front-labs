@@ -73,11 +73,57 @@
                 result;
             }
 
+            inputA.style.color = '';
+            inputA.style.borderColor = '';
+
             inputB.style.color = '';
             inputB.style.borderColor = '';
 
             let result = a / b;
             alert ( a + ' / ' + b + ' = ' + result);
+        }
+
+        function showPower() {
+            let inputA = document.getElementById ('numberA');
+            let inputB = document.getElementById ('numberB');
+
+            let a = parseInt(inputA.value);
+            let b = parseInt(inputB.value);
+
+            if(isNaN(a) || isNaN(b)) {
+                alert('Одно из полей содержит нечисловые данные')
+                inputA.focus();
+                inputA.select();
+                inputA.style.color = 'red';
+                inputA.style.borderColor = 'red';
+                inputB.focus();
+                inputB.select();
+                inputB.style.color = 'red';
+                inputB.style.borderColor = 'red';
+                result;
+            }
+
+            if(a == 0 && b == 0) {
+                alert('Оба поля равны нулю')
+                inputA.focus();
+                inputA.select();
+                inputA.style.color = 'red';
+                inputA.style.borderColor = 'red';
+                inputB.focus();
+                inputB.select();
+                inputB.style.color = 'red';
+                inputB.style.borderColor = 'red';
+                result;
+            }
+
+            inputA.style.color = '';
+            inputA.style.borderColor = '';
+
+            inputB.style.color = '';
+            inputB.style.borderColor = '';
+
+            let result = a ** b;
+            alert ( a + ' ^ ' + b + ' = ' + result);
         }
 
         function showAuthor() {
@@ -126,6 +172,8 @@
         <div class="message" onclick="showProd()">Найти произведение</div>
 
         <div class="message" onclick="showDiv()">Найти отношение чисел</div>
+
+        <div class="message" onclick="showPower()">Возвести в степень</div>
 
     </main>
 
