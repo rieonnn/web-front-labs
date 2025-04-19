@@ -136,6 +136,19 @@
             alert(phrase);
         }
 
+        function changeOutput(buttonNum, backColor, textColor, borderRadius, textAlign, height, border, width) {
+            let output = document.getElementById('output')
+            output.innerHTML = 'Нажата кнопка ' + buttonNum
+            output.style.backgroundColor = backColor;
+            output.style.color = textColor;
+            output.style.borderRadius = borderRadius;
+            output.style.textAlign = textAlign;
+            output.style.height = height;
+            output.style.border = border;
+            output.style.width = width;
+
+        }
+
     </script>
 
     <style>
@@ -153,6 +166,13 @@
         font-size: 20px;
         cursor: pointer;
         }
+
+        #output {
+            border: 1px solid;
+            width: 300px;
+            height: 40px;
+        }
+
     </style>
 </head>
 <body>
@@ -174,6 +194,15 @@
         <div class="message" onclick="showDiv()">Найти отношение чисел</div>
 
         <div class="message" onclick="showPower()">Возвести в степень</div>
+
+        <div>
+            <input type="button" value="Кнопка1" onclick="changeOutput(1, 'red', 'yellow', '8px', 'center', '20px', '2px solid', '200px')">
+            <input type="button" value="Кнопка2" onclick="changeOutput(2, 'black', 'lime', '20%', 'center', '35px', '2px solid', '350px')">
+            <input type="button" value="Кнопка3" onclick="changeOutput(3, 'maroon', 'white', '10px', 'center', '25px', '2px solid', '400px')">
+            <input type="button" value="Кнопка4" onclick="changeOutput(4, 'orange', 'beige', '15%', 'center', '30px', '2px solid', '150px')">
+        </div>
+
+        <div id="output"></div>
 
     </main>
 
