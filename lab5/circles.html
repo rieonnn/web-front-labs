@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреева И.А. Круги</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-48x48.png">
+
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 80px;
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.7s ease;
+        }
+
+        .hidden {
+            width: 0;
+            height: 0;
+            opacity: 0;
+        }
+
+        #container {
+            position: relative;
+            height: 600px;
+            border: 1px dashed #ccc;
+        }
+
+        #resetBtn {
+            margin: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        function hideCircle(circle) {
+            circle.classList.add('hidden');
+        }
+
+        function resetCircles() {
+            const circles = document.querySelectorAll('.circle');
+            circles.forEach(circle => {
+                circle.classList.remove('hidden');
+            });
+        }
+
+        function random(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+        function placeCirclesRandomly() {
+            const container = document.getElementById('container');
+            const colors = ['red', 'green', 'blue', 'purple', 'orange', 'maroon', 'teal', 'navy', 'brown', 'magenta'];
+
+            for (let i = 1; i <= 10; i++) {
+                const circle = document.createElement('div');
+                circle.className = 'circle';
+                circle.style.backgroundColor = colors[i - 1];
+
+                circle.innerText = i;
+
+                circle.style.left = random(0, container.clientWidth - 100) + 'px';
+                circle.style.top = random(0, container.clientHeight - 100) + 'px';
+
+                circle.onclick = () => hideCircle(circle);
+
+                container.appendChild(circle);
+            }
+        }
+
+        window.onload = placeCirclesRandomly;
+    </script>
+</head>
+<body>
+    <header onclick="alert('Автор: Андреева Ирина Александровна')" style="cursor: pointer;">
+        НГТУ, ФБ, Лабораторная 5 — Круги
+    </header>
+
+    <main>
+        <div id="container"></div>
+        <button id="resetBtn" onclick="resetCircles()">Показать все круги снова</button>
+    </main>
+
+    <footer ondblclick="alert('Лучше кругов только их возврат!')" style="cursor: pointer;">
+        &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
