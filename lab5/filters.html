@@ -45,6 +45,12 @@
             document.getElementById('invertOutput').innerText = value;
             document.getElementById('invertImage').style.filter = 'invert(' + value + ')';
         }
+
+        function saturateChange() {
+            let value = document.getElementById('saturateValue').value + '%';
+            document.getElementById('saturateOutput').innerText = value;
+            document.getElementById('saturateImage').style.filter = 'saturate(' + value + ')';
+        }
     </script>
 </head>
 <body>
@@ -59,7 +65,7 @@
             <span id="blurOutput"></span>
         </div>
 
-        <div><img src="gorni'.jpg" id="blurImage" style="height: 600px;"></div>
+        <div><img src="gorni'.jpg" id="blurImage" style="height: 500px;"></div>
 
         <div>
             Фильтр brightness:
@@ -67,7 +73,7 @@
             <span id="brightnessOutput"></span>
         </div>
 
-        <div><img src="brightness.jpg" id="brightnessImage" style="height: 550px;"></div>
+        <div><img src="brightness.jpg" id="brightnessImage" style="height: 460px;"></div>
 
         <div>
             Фильтр contrast:
@@ -75,7 +81,7 @@
             <span id="contrastOutput"></span>
         </div>
 
-        <div><img src="contrast.jpg" id="contrastImage" style="height: 700px;"></div>
+        <div><img src="contrast.jpg" id="contrastImage" style="height: 660px;"></div>
 
         <div>
             Фильтр grayscale:
@@ -83,7 +89,7 @@
             <span id="grayscaleOutput"></span>
         </div>
 
-        <div><img src="grayscale.jpg" id="grayscaleImage"></div>
+        <div><img src="grayscale.jpg" id="grayscaleImage" height="480px"></div>
 
         <div>
             Фильтр hue-rotate:
@@ -91,7 +97,7 @@
             <span id="hueRotateOutput"></span>
         </div>
 
-        <div><img src="hue-rotate.jpg" id="hueRotateImage" style="height:650px;"></div>
+        <div><img src="hue-rotate.jpg" id="hueRotateImage" style="height:600px;"></div>
 
         <div>
             Фильтр invert:
@@ -99,11 +105,15 @@
             <span id="invertOutput"></span>
         </div>
 
-        <div><img src="invert.jpg" id="invertImage" height="550px"></div>
+        <div><img src="invert.jpg" id="invertImage" height="530px"></div>
 
         <div>
             Фильтр saturate:
+            <input type="range" min="0" max="500" value="100" onchange="saturateChange()" id="saturateValue">
+            <span id="saturateOutput"></span>
         </div>
+
+        <div><img src="saturate.jpg" id="saturateImage" height="580px" ></div>
 
         <div>
             Фильтр sepia:
