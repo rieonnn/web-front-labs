@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреева Ирина Александровна. Событие</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-48x48.png">
+
+    <style>
+
+        #block {
+            width: 200px;
+            height: 100px;
+            border:2px solid #39363b;
+            background-color: beige;
+            cursor: crosshair;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            overflow: auto;
+        }
+        .ctrl {
+            color: red;
+            font-weight: bold;
+            border-radius: 10px;
+        }
+
+        .alt {
+            color: rgb(40, 104, 32);
+            font-weight: bold;
+            border-radius: 25px;
+        }
+
+        .shift {
+            color: rgb(100, 6, 53);
+            font-weight: bold;
+            border-radius: 40px;
+        }
+
+        .key-info {
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+    </style>
+
+    <script>
+
+        function showCoords() {
+            let x = this.event.x;
+            let y = this.event.y;
+            let div = document.getElementById('block');
+
+            // Сбрасываем все классы
+            div.className = '';
+
+        // Формируем текст с информацией о нажатых клавишах
+        let keysInfo = [];
+            if (this.event.ctrlKey) {
+                keysInfo.push("Нажата клавиша Ctrl");
+                div.classList.add('ctrl');
+            }
+            if (this.event.altKey) {
+                keysInfo.push("Нажата клавиша Alt");
+                div.classList.add('alt');
+            }
+            if (this.event.shiftKey) {
+                keysInfo.push("Нажата клавиша Shift");
+                div.classList.add('shift');
+            }
+
+        let keysText = keysInfo.length > 0
+            ? '<div class="key-info">' + keysInfo.join('<br>') + '</div>'
+            : '';
+
+        div.innerHTML =
+            `<div>
+                <b>x</b> = ${x}px<br>
+                <b>y</b> = ${y}px
+                ${keysText}
+            </div>`;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, Лабораторная 5
+    </header>
+
+    <main>
+        <div id="block" onmousemove="showCoords()"></div>
+    </main>
+
+    <footer>
+        &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
