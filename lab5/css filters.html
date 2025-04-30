@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреева Ирина Александровна. CSS Фильтры</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-48x48.png">
+    <style>
+        .container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .image-container {
+            position: relative;
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        #filtered-image {
+            max-width: 100%;
+            height: auto;
+            transition: filter 0.3s ease;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-info {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .instructions {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #625135;
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #625135;
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+        }
+
+        .key {
+            display: inline-block;
+            padding: 2px 6px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            border: 1px solid #b0b0b0;
+            font-family: monospace;
+            font-weight: bold;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const image = document.getElementById('filtered-image');
+            const filterName = document.getElementById('filter-name');
+            const filterIntensity = document.getElementById('filter-intensity');
+
+            let activeFilter = 'blur';
+
+            image.addEventListener('mousemove', (e) => {
+                const rect = image.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const percentage = Math.min(100, Math.max(0, (x / rect.width) * 100));
+
+                let filterValue = '';
+                let intensityText = '';
+
+                if (e.ctrlKey) {
+                    activeFilter = 'grayscale';
+                    filterValue = `grayscale(${percentage / 100})`;
+                    intensityText = `${Math.round(percentage)}%`;
+                }
+                else if (e.altKey) {
+                    activeFilter = 'hue-rotate';
+                    filterValue = `hue-rotate(${percentage * 3.6}deg)`;
+                    intensityText = `${Math.round(percentage * 3.6)}°`;
+                }
+                else if (e.shiftKey) {
+                    activeFilter = 'brightness/contrast';
+                    const brightness = 1 + (percentage / 100);
+                    const contrast = 1 + (percentage / 100);
+                    filterValue = `brightness(${brightness}) contrast(${contrast})`;
+                    intensityText = `brightness: ${brightness.toFixed(1)}, contrast: ${contrast.toFixed(1)}`;
+                }
+                else {
+                    activeFilter = 'blur';
+                    filterValue = `blur(${percentage / 20}px)`;
+                    intensityText = `${Math.round(percentage / 20 * 10) / 10}px`;
+                }
+
+                image.style.filter = filterValue;
+                filterName.textContent = activeFilter;
+                filterIntensity.textContent = intensityText;
+            });
+
+            image.addEventListener('mouseleave', () => {
+                image.style.filter = 'none';
+                filterName.textContent = 'нет';
+                filterIntensity.textContent = '0%';
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, Лабораторная 5
+    </header>
+
+    <main>
+        <h1 style="text-align: center;">Демонстрация CSS-фильтров</h1>
+
+    <div class="container">
+        <div class="image-container">
+            <img id="filtered-image" src="css filters.jpg" alt="изображение с фильтрами">
+        </div>
+        <div class="filter-info">
+            Текущий фильтр: <span id="filter-name">нет</span><br>
+            Интенсивность: <span id="filter-intensity">0%</span>
+        </div>
+    </div>
+
+    <div class="instructions">
+        <h3>Как использовать эту страницу:</h3>
+        <ul>
+            <li>Наведите курсор на изображение - будет применён фильтр <strong>blur</strong>. Интенсивность зависит от положения курсора (слева - слабее, справа - сильнее)</li>
+            <li>Удерживайте <span class="key">Ctrl</span> - будет применён фильтр <strong>grayscale</strong></li>
+            <li>Удерживайте <span class="key">Alt</span> - будет применён фильтр <strong>hue-rotate</strong></li>
+            <li>Удерживайте <span class="key">Shift</span> - будет применён фильтр <strong>brightness/contrast</strong></li>
+        </ul>
+    </div>
+    </main>
+
+    <footer>
+        &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
+    </footer>
+
+</body>
+</html>
