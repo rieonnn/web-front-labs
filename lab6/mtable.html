@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреева Ирина Александровна. Таблица умножения</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+
+    <style>
+        #mtable {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 95%;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #mtable:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            color: #3b3120;
+            margin-bottom: 25px;
+            font-size: 32px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b3d41 0%, #2d3035 100%);
+            border-radius: 3px;
+        }
+
+        #mtable div {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        #mtable div:hover {
+            background: #e9ecef;
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+            #mtable div:nth-child(odd) {
+                background: #f1f3f5;
+            }
+
+        @media (max-width: 600px) {
+            #mtable {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            #mtable div {
+                font-size: 1em;
+                padding: 10px;
+            }
+        }
+    </style>
+
+    <script>
+        function showMutipleTable() {
+            let tbl = document.getElementById('mtable');
+            tbl.innerHTML = '<h1>Таблица умножения</h1>'
+            for (i = 1; i <= 10; i++) {
+                let s = `<div>${i} * 7 = ${i*7} </div>`;
+                tbl.innerHTML += s;
+            }
+        }
+
+    </script>
+</head>
+<body onload="showMutipleTable()">
+    <header>
+        НГТУ, ФБ, Лабораторная 6
+    </header>
+
+    <main>
+        <div id="mtable"></div>
+    </main>
+
+    <footer>
+        &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
