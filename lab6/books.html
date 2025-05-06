@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреева Ирина Александровна. Книги</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-48x48.png">
+    <script src="books.js"></script>
+
+    <style>
+        #booklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .book {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .book:hover {
+            transform: translateY(-5px);
+        }
+
+        .bestseller {
+            border-left: 5px solid #488107;
+            background-color: #fff5f5;
+        }
+
+        .out-of-stock {
+            opacity: 0.6;
+            position: relative;
+        }
+
+        .out-of-stock::after {
+            content: "Нет в наличии";
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #2b8a3e;
+            margin-top: 8px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        function showBooks() {
+            const booklist = document.getElementById('booklist');
+            for(let i = 0; i < books.length; i++){
+                const book = books[i];
+                let bookClasses = "book";
+                if (book.bestseller) bookClasses += " bestseller";
+                if (!book.inStock) bookClasses += " out-of-stock";
+
+                booklist.innerHTML += `
+                <div class="${bookClasses}">
+                    <h3>${book.name}</h3>
+                    <div><b>Автор:</b> ${book.author}</div>
+                    <div><b>Год издания:</b> ${book.publicationYear}</div>
+                    <div class="price">${book.price} ₽</div>
+                    ${book.bestseller ? '<div class="bestseller-badge">Бестселлер</div>' : ''}
+                </div>
+                `;
+            }
+        }
+    </script>
+</head>
+<body onload="showBooks()">
+    <header>
+        НГТУ, ФБ, Лабораторная 6
+    </header>
+
+    <main>
+        <h1>Список книг</h1>
+        <div id="booklist">
+        </div>
+    </main>
+
+    <footer>
+        &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
