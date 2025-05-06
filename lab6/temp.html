@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреева Ирина Александровна. Диаграмма температур</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+    <style>
+        .chart {
+            display: flex;
+            align-items: flex-end;
+            height: 300px;
+            gap: 5px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        .bar {
+            flex: 1;
+            background-color: #cec58b;
+            position: relative;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .bar.min {
+            background-color: #a19385;
+        }
+        .bar.highlight, .bar.highlight .min {
+            background-color: #a24b52;
+        }
+        .day-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+        }
+        .temp-label {
+            position: absolute;
+            top: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+        }
+        .info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f3f1f1;
+            border-radius: 5px;
+        }
+        input {
+            padding: 8px;
+            margin-top: 10px;
+            width: 50px;
+        }
+    </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chart = document.getElementById('chart');
+        const dayInput = document.getElementById('day-input');
+        const infoDiv = document.getElementById('info');
+        const days = 30;
+        let temperatures = [];
+        let highlightedBar = null;
+
+        // Генерация случайных температур
+        function generateTemperatures() {
+            temperatures = [];
+            for (let i = 0; i < days; i++) {
+                const minTemp = Math.floor(Math.random() * 15) - 5; // от -5 до +10
+                const maxTemp = minTemp + Math.floor(Math.random() * 10) + 2; // минимум на 2° больше
+                temperatures.push({ min: minTemp, max: maxTemp });
+            }
+        }
+
+        // Отрисовка диаграммы
+        function renderChart() {
+            chart.innerHTML = '';
+            const maxTemp = Math.max(...temperatures.map(t => t.max));
+            const minTemp = Math.min(...temperatures.map(t => t.min));
+            const scale = 250 / (maxTemp - minTemp);
+
+            temperatures.forEach((temp, index) => {
+                const day = index + 1;
+                const barHeightMin = (temp.min - minTemp) * scale;
+                const barHeightMax = (temp.max - minTemp) * scale;
+
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.dataset.day = day;
+                bar.style.height = `${barHeightMax}px`;
+
+                const minBar = document.createElement('div');
+                minBar.className = 'bar min';
+                minBar.style.height = `${barHeightMin}px`;
+                minBar.style.width = '100%';
+                minBar.style.position = 'absolute';
+                minBar.style.bottom = '0';
+
+                const tempLabel = document.createElement('div');
+                tempLabel.className = 'temp-label';
+                tempLabel.textContent = `${temp.max}°/${temp.min}°`;
+
+                const dayLabel = document.createElement('div');
+                dayLabel.className = 'day-label';
+                dayLabel.textContent = day;
+
+                bar.appendChild(minBar);
+                bar.appendChild(tempLabel);
+                bar.appendChild(dayLabel);
+                chart.appendChild(bar);
+            });
+        }
+
+        // Подсветка столбца
+        function highlightBar(day) {
+            // Снимаем предыдущую подсветку
+            if (highlightedBar) {
+                highlightedBar.classList.remove('highlight');
+            }
+
+            // Находим новый столбец
+            const bars = document.querySelectorAll('.bar');
+            const barToHighlight = Array.from(bars).find(bar => bar.dataset.day == day);
+
+            if (barToHighlight) {
+                barToHighlight.classList.add('highlight');
+                highlightedBar = barToHighlight;
+
+                // Показываем информацию
+                const temp = temperatures[day - 1];
+                infoDiv.innerHTML = `
+                    <strong>День ${day}:</strong><br>
+                    Максимальная температура: ${temp.max}°C<br>
+                    Минимальная температура: ${temp.min}°C
+                `;
+            }
+        }
+
+        // Обработчик ввода дня
+        dayInput.addEventListener('input', function() {
+            const day = parseInt(this.value);
+            if (day >= 1 && day <= 30) {
+                highlightBar(day);
+            } else {
+                infoDiv.innerHTML = 'Введите число от 1 до 30';
+                if (highlightedBar) {
+                    highlightedBar.classList.remove('highlight');
+                    highlightedBar = null;
+                }
+            }
+        });
+
+        // Инициализация
+        generateTemperatures();
+        renderChart();
+    });
+</script>
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, Лабораторная 6
+    </header>
+
+    <main>
+        <h1 style="text-align: center;">Диаграмма температур за месяц</h1>
+
+    <div class="chart" id="chart"></div>
+    <div>
+        <label for="day-input">Введите номер дня (1-30): </label>
+        <input type="number" id="day-input" min="1" max="30">
+    </div>
+    <div class="info" id="info"></div>
+    </main>
+
+    <footer>
+        &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
