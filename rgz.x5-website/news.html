@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новости - Корпоративный Центр Икс 5</title>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.png">
+
+    <style>
+        :root {
+            --primary-color: #00a82d;
+            --primary-dark: #007a21;
+            --primary-light: #e6f5ea;
+            --text-color: #333;
+            --white: #fff;
+            --light-gray: #f9f9f9;
+            --dark-gray: #555;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--light-gray);
+        }
+
+        /* Header styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            max-width: 1600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-left: 50px;
+        }
+
+        .logo img {
+            height: 40px;
+            transition: var(--transition);
+        }
+
+        /* Hamburger menu icon */
+        .menu-icon {
+            cursor: pointer;
+            font-size: 28px;
+            color: var(--primary-color);
+            position: fixed;
+            left: 10px;
+            top: 10px;
+            z-index: 1100;
+            background: var(--white);
+            padding: 5px 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .menu-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Navigation styles */
+        nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 300px;
+            height: 100vh;
+            background-color: var(--white);
+            box-shadow: 5px 0 20px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            z-index: 1000;
+            padding-top: 80px;
+            overflow-y: auto;
+        }
+
+        nav.active {
+            left: 0;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0 20px;
+        }
+
+        .nav-menu li {
+            margin-bottom: 5px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 16px;
+            padding: 12px 15px;
+            border-radius: 6px;
+            transition: var(--transition);
+            display: block;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+            background-color: var(--primary-light);
+        }
+
+        .nav-menu a.active {
+            color: var(--white);
+            background-color: var(--primary-color);
+        }
+
+        /* Main content */
+        main {
+            margin-top: 70px;
+            min-height: calc(100vh - 160px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* News section */
+        .news-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 42px;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .news-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .news-card:hover .news-image img {
+            transform: scale(1.05);
+        }
+
+        .news-content {
+            padding: 25px;
+        }
+
+        .news-date {
+            color: var(--primary-color);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .news-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .news-excerpt {
+            color: var(--dark-gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .read-more:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* News modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 50px auto;
+            max-width: 800px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .modal-date {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .modal-body {
+            padding: 25px;
+            line-height: 1.7;
+        }
+
+        .modal-body img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.8);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            padding: 0;
+        }
+
+        .close-modal:hover {
+            color: var(--primary-color);
+            transform: rotate(90deg);
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0, 168, 45, 0.3);
+            z-index: 999;
+            transition: var(--transition);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            padding: 50px 0 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-logo {
+            margin-bottom: 30px;
+        }
+
+        .footer-logo img {
+            height: 50px;
+        }
+
+        .footer-contacts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .contact-item {
+            max-width: 250px;
+        }
+
+        .contact-item h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .contact-item p, .contact-item a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+        }
+
+        .contact-item a:hover {
+            color: var(--white);
+            text-decoration: underline;
+        }
+
+        .copyright {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            width: 100%;
+        }
+
+        /* Адаптивные стили */
+        @media (max-width: 992px) {
+            .header-container {
+                padding: 0 20px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .news-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 32px;
+            }
+
+            .logo {
+                margin-left: 40px;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .footer-contacts {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+            }
+
+            .contact-item {
+                max-width: 100%;
+            }
+
+            .modal-content {
+                margin: 30px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 28px;
+            }
+
+            nav {
+                width: 85%;
+            }
+
+            .menu-icon {
+                left: 15px;
+                top: 15px;
+                font-size: 24px;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger menu icon - всегда видна и фиксирована -->
+    <div class="menu-icon" id="menuToggle">☰</div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/x5-logo-white.webp" alt="X5 Group Logo">
+            </div>
+        </div>
+    </header>
+
+    <!-- Навигационное меню -->
+    <nav id="mainNav">
+      <ul class="nav-menu">
+          <li><a href="index.html">О компании</a></li>
+          <li><a href="news.html" class="active">Новости</a></li>
+          <li><a href="currency.html">Курс валют</a></li>
+          <li><a href="contacts.html">Контактные данные</a></li>
+          <li><a href="video.html">Видео</a></li>
+      </ul>
+  </nav>
+
+    <!-- Main content -->
+    <main>
+        <!-- News Section -->
+        <section class="news-section">
+            <div class="container">
+                <h2 class="section-title">Новости компании</h2>
+
+                <div class="news-grid">
+                    <!-- News Card 1 -->
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="images/n1.jpg" alt="X5 открывает новые магазины">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-date">15 мая 2023</span>
+                            <h3 class="news-title">X5 открывает 50 новых магазинов "Пятёрочка" в регионах России</h3>
+                            <p class="news-excerpt">X5 Group объявила о планах по расширению сети "Пятёрочка" с открытием 50 новых магазинов в малых и средних городах России до конца текущего года...</p>
+                            <button class="read-more" onclick="openModal('modal1')">Читать далее</button>
+                        </div>
+                    </div>
+
+                    <!-- News Card 2 -->
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="images/n2.jpg" alt="X5 цифровизация">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-date">3 мая 2023</span>
+                            <h3 class="news-title">X5 внедряет искусственный интеллект для управления запасами</h3>
+                            <p class="news-excerpt">Компания X5 Group начала тестирование новой системы управления товарными запасами на основе искусственного интеллекта в 100 магазинах сети "Перекрёсток"...</p>
+                            <button class="read-more" onclick="openModal('modal2')">Читать далее</button>
+                        </div>
+                    </div>
+
+                    <!-- News Card 3 -->
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="images/n3.jpg" alt="X5 отчет">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-date">28 апреля 2023</span>
+                            <h3 class="news-title">X5 опубликовала финансовые результаты за первый квартал 2023 года</h3>
+                            <p class="news-excerpt">Выручка X5 Retail Group в первом квартале 2023 года составила 642 млрд рублей, что на 18% больше по сравнению с аналогичным периодом прошлого года...</p>
+                            <button class="read-more" onclick="openModal('modal3')">Читать далее</button>
+                        </div>
+                    </div>
+
+                    <!-- News Card 4 -->
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="images/n4.jpg" alt="X5 экология">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-date">20 апреля 2023</span>
+                            <h3 class="news-title">X5 запускает программу по сокращению пластиковых отходов</h3>
+                            <p class="news-excerpt">X5 Group объявила о старте экологической инициативы "Зелёный ритейл", направленной на сокращение использования пластиковой упаковки в собственных торговых марках...</p>
+                            <button class="read-more" onclick="openModal('modal4')">Читать далее</button>
+                        </div>
+                    </div>
+
+                    <!-- News Card 5 -->
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="images/n5.jpg" alt="X5 партнерство">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-date">12 апреля 2023</span>
+                            <h3 class="news-title">X5 и российские производители подписали соглашение о сотрудничестве</h3>
+                            <p class="news-excerpt">X5 Group подписала стратегические соглашения с 20 российскими производителями продуктов питания о расширении ассортимента местной продукции в магазинах сети...</p>
+                            <button class="read-more" onclick="openModal('modal5')">Читать далее</button>
+                        </div>
+                    </div>
+
+                    <!-- News Card 6 -->
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="images/n6.jpg" alt="X5 доставка">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-date">5 апреля 2023</span>
+                            <h3 class="news-title">X5 расширяет зону покрытия сервиса доставки продуктов</h3>
+                            <p class="news-excerpt">Сервис доставки продуктов от X5 Group теперь доступен в 15 новых городах России, включая Казань, Новосибирск и Екатеринбург. Компания планирует...</p>
+                            <button class="read-more" onclick="openModal('modal6')">Читать далее</button>
+                        </div>
+                    </div>
+
+                    <!-- News Card 7 -->
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="images/n7.jpg" alt="X5 награда">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-date">28 марта 2023</span>
+                            <h3 class="news-title">X5 признана лучшим работодателем России в розничной торговле</h3>
+                            <p class="news-excerpt">По результатам исследования рекрутингового портала HeadHunter, X5 Retail Group заняла первое место в рейтинге лучших работодателей России в категории...</p>
+                            <button class="read-more" onclick="openModal('modal7')">Читать далее</button>
+                        </div>
+                    </div>
+
+                    <!-- News Card 8 -->
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="images/n8.jpg" alt="X5 благотворительность">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-date">15 марта 2023</span>
+                            <h3 class="news-title">X5 собрала 100 млн рублей в рамках благотворительной акции</h3>
+                            <p class="news-excerpt">Благотворительная программа X5 Group "Корзина доброты" помогла собрать 100 млн рублей для помощи нуждающимся семьям. Средства были направлены...</p>
+                            <button class="read-more" onclick="openModal('modal8')">Читать далее</button>
+                        </div>
+                    </div>
+
+                    <!-- News Card 9 -->
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="images/n9.jpg" alt="X5 логистика">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-date">3 марта 2023</span>
+                            <h3 class="news-title">X5 открывает новый распределительный центр в Сибири</h3>
+                            <p class="news-excerpt">X5 Group ввела в эксплуатацию новый распределительный центр площадью 50 000 кв.м в Новосибирске. Центр будет обслуживать более 500 магазинов сети в Сибирском...</p>
+                            <button class="read-more" onclick="openModal('modal9')">Читать далее</button>
+                        </div>
+                    </div>
+
+                    <!-- News Card 10 -->
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="images/n10.jpg" alt="X5 инновации">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-date">20 февраля 2023</span>
+                            <h3 class="news-title">X5 тестирует технологию бесконтактной оплаты с распознаванием лица</h3>
+                            <p class="news-excerpt">В нескольких магазинах "Пятёрочка" в Москве началось тестирование новой системы оплаты с использованием технологии распознавания лица. Покупатели смогут...</p>
+                            <button class="read-more" onclick="openModal('modal10')">Читать далее</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Modals -->
+        <!-- Modal 1 -->
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <button class="close-modal" onclick="closeModal('modal1')">&times;</button>
+                <div class="modal-header">
+                    <h3 class="modal-title">X5 открывает 50 новых магазинов "Пятёрочка" в регионах России</h3>
+                    <span class="modal-date">15 мая 2023</span>
+                </div>
+                <div class="modal-body">
+                    <img src="images/n1.jpg" alt="X5 открывает новые магазины">
+                    <p>X5 Group объявила о планах по расширению сети "Пятёрочка" с открытием 50 новых магазинов в малых и средних городах России до конца текущего года. Новые торговые точки появятся в 20 регионах страны, включая Республику Татарстан, Краснодарский край и Нижегородскую область.</p>
+                    <p>"Этот шаг соответствует нашей стратегии по увеличению присутствия в регионах с высоким потенциалом роста. Мы видим значительный спрос на качественные продукты по доступным ценам в малых городах", - отметил генеральный директор X5 Group.</p>
+                    <p>Каждый новый магазин создаст в среднем 15 рабочих мест. Компания также планирует закупать до 30% ассортимента у местных производителей, что будет способствовать развитию региональных экономик.</p>
+                    <p>Инвестиции в открытие новых магазинов составят около 1,5 млрд рублей. Все торговые точки будут соответствовать новому формату "Пятёрочки" с увеличенной площадью и расширенным ассортиментом свежих продуктов.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 2 -->
+        <div id="modal2" class="modal">
+            <div class="modal-content">
+                <button class="close-modal" onclick="closeModal('modal2')">&times;</button>
+                <div class="modal-header">
+                    <h3 class="modal-title">X5 внедряет искусственный интеллект для управления запасами</h3>
+                    <span class="modal-date">3 мая 2023</span>
+                </div>
+                <div class="modal-body">
+                    <img src="images/n2.jpg" alt="X5 цифровизация">
+                    <p>Компания X5 Group начала тестирование новой системы управления товарными запасами на основе искусственного интеллекта в 100 магазинах сети "Перекрёсток". Система анализирует исторические данные о продажах, погодные условия, местные события и другие факторы для точного прогнозирования спроса.</p>
+                    <p>"Использование ИИ позволяет нам сократить излишки запасов на 15-20%, при этом минимизировать случаи отсутствия товаров на полках. Это важный шаг в повышении эффективности нашей цепочки поставок", - пояснил директор по логистике X5 Group.</p>
+                    <p>Новая система уже показала первые положительные результаты: точность прогнозов спроса увеличилась на 30% по сравнению с традиционными методами. В случае успешного тестирования технология будет внедрена во всех магазинах сети до конца 2024 года.</p>
+                    <p>Разработка системы велась собственными IT-специалистами X5 в сотрудничестве с ведущими российскими экспертами в области искусственного интеллекта. Инвестиции в проект составили около 200 млн рублей.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 3 -->
+        <div id="modal3" class="modal">
+            <div class="modal-content">
+                <button class="close-modal" onclick="closeModal('modal3')">&times;</button>
+                <div class="modal-header">
+                    <h3 class="modal-title">X5 опубликовала финансовые результаты за первый квартал 2023 года</h3>
+                    <span class="modal-date">28 апреля 2023</span>
+                </div>
+                <div class="modal-body">
+                    <img src="images/n3.jpg" alt="X5 отчет">
+                    <p>Выручка X5 Retail Group в первом квартале 2023 года составила 642 млрд рублей, что на 18% больше по сравнению с аналогичным периодом прошлого года. Чистая прибыль компании достигла 12,5 млрд рублей, увеличившись на 22%.</p>
+                    <p>Основной рост выручки обеспечила сеть "Пятёрочка", которая показала увеличение на 20%. Компания открыла 250 новых магазинов в первом квартале, доведя общее количество торговых точек до 18 200 по всей России.</p>
+                    <p>"Мы продолжаем реализацию нашей стратегии роста, делая акцент на развитие цифровых каналов и повышение эффективности операционной деятельности. Результаты первого квартала подтверждают правильность выбранного курса", - заявил финансовый директор X5 Group.</p>
+                    <p>Компания также отметила рост среднего чека на 7% и увеличение трафика покупателей на 10% по сравнению с первым кварталом 2022 года. X5 подтвердила прогноз по годовому росту выручки на уровне 15-20%.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Остальные модальные окна (4-10) -->
+
+        <!-- Back to top button -->
+        <a href="#" class="back-to-top">↑</a>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+          <div class="footer-logo">
+              <img src="images/x5-logo.png" alt="X5 Group Logo">
+          </div>
+
+          <div class="footer-contacts">
+              <div class="contact-item">
+                  <h4>Адрес</h4>
+                  <p>109029, г. Москва, вн.тер.г. Муниципальный Округ Нижегородский, ул Средняя Калитниковская, д. 28, стр. 4</p>
+              </div>
+
+              <div class="contact-item">
+                  <h4>Телефон</h4>
+                  <p><a href="tel:+74956628888">+7 (495) 662 88 88</a></p>
+                  <p><a href="tel:+74957899595">+7 (495) 789 95 95</a></p>
+              </div>
+
+              <div class="contact-item">
+                  <h4>Email</h4>
+                  <p><a href="mailto:info@x5.ru">info@x5.ru</a></p>
+              </div>
+          </div>
+
+          <div class="copyright">
+              © 2025 X5 Retail Group. Все права защищены.
+          </div>
+      </div>
+  </footer>
+
+    <script>
+        // Переключение мобильного меню
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            menuToggle.textContent = mainNav.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Закрытие меню при нажатии на ссылку
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                menuToggle.textContent = '☰';
+            });
+        });
+
+        // Highlight current page in navigation
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        navLinks.forEach(link => {
+            const linkPage = link.getAttribute('href');
+            if (currentPage === linkPage) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        // Кнопка "Наверх"
+        document.querySelector('.back-to-top').addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+        // Модальные функции
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Закрытие модального режим при нажатии снаружи
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
