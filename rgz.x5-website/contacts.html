@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контактные данные - Корпоративный Центр Икс 5</title>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.png">
+    <style>
+        :root {
+            --primary-color: #00a82d;
+            --primary-dark: #007a21;
+            --primary-light: #e6f5ea;
+            --text-color: #333;
+            --white: #fff;
+            --light-gray: #f9f9f9;
+            --dark-gray: #555;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--light-gray);
+        }
+
+        /* Header styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            max-width: 1600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-left: 50px;
+        }
+
+        .logo img {
+            height: 40px;
+            transition: var(--transition);
+        }
+
+         /* Hamburger menu icon */
+         .menu-icon {
+            cursor: pointer;
+            font-size: 28px;
+            color: var(--primary-color);
+            position: fixed;
+            left: 10px;
+            top: 10px;
+            z-index: 1100;
+            background: var(--white);
+            padding: 5px 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .menu-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Navigation styles */
+        nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 300px;
+            height: 100vh;
+            background-color: var(--white);
+            box-shadow: 5px 0 20px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            z-index: 1000;
+            padding-top: 80px;
+            overflow-y: auto;
+        }
+
+        nav.active {
+            left: 0;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0 20px;
+        }
+
+        .nav-menu li {
+            margin-bottom: 5px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 16px;
+            padding: 12px 15px;
+            border-radius: 6px;
+            transition: var(--transition);
+            display: block;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+            background-color: var(--primary-light);
+        }
+
+        .nav-menu a.active {
+            color: var(--white);
+            background-color: var(--primary-color);
+        }
+
+        /* Main content */
+        main {
+            margin-top: 70px;
+            min-height: calc(100vh - 160px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* Contacts section */
+        .contacts-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 42px;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .contacts-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .contacts-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-block {
+            margin-bottom: 30px;
+        }
+
+        .contact-title {
+            font-size: 24px;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .contact-icon {
+            color: var(--primary-color);
+            margin-right: 15px;
+            font-size: 20px;
+            min-width: 24px;
+        }
+
+        .contact-text {
+            flex: 1;
+        }
+
+        .contact-text h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .contact-text p, .contact-text a {
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-text a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .map-container {
+            flex: 1;
+            min-width: 300px;
+            height: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Feedback form */
+        .feedback-section {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .feedback-title {
+            font-size: 24px;
+            color: var(--primary-dark);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .feedback-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 168, 45, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 14px 25px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            grid-column: 1 / -1;
+            justify-self: center;
+            min-width: 200px;
+        }
+
+        .submit-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0, 168, 45, 0.3);
+            transition: var(--transition);
+            z-index: 999;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            padding: 50px 0 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-logo {
+            margin-bottom: 30px;
+        }
+
+        .footer-logo img {
+            height: 50px;
+        }
+
+        .footer-contacts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .contact-item {
+            max-width: 250px;
+        }
+
+        .contact-item h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: rgba(51, 49, 49, 0.9);
+        }
+
+        .contact-item p, .contact-item a {
+            color: rgba(56, 53, 53, 0.7);
+            font-size: 15px;
+        }
+
+        .contact-item a:hover {
+            color: var(--white);
+            text-decoration: underline;
+        }
+
+        .copyright {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            width: 100%;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .header-container {
+                padding: 0 20px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .feedback-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 32px;
+            }
+
+            .logo {
+                margin-left: 40px;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .footer-contacts {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+            }
+
+            .contact-item {
+                max-width: 100%;
+            }
+
+            .map-container {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 28px;
+            }
+
+            nav {
+                width: 85%;
+            }
+
+            .menu-icon {
+                left: 15px;
+                top: 15px;
+                font-size: 24px;
+            }
+
+            .contacts-section, .feedback-section {
+                padding: 40px 0;
+            }
+
+            .feedback-section {
+                padding: 20px;
+            }
+
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Hamburger menu icon - всегда видна и фиксирована -->
+    <div class="menu-icon" id="menuToggle">☰</div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/x5-logo-white.webp" alt="X5 Group Logo">
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation menu -->
+    <nav id="mainNav">
+      <ul class="nav-menu">
+          <li><a href="index.html">О компании</a></li>
+          <li><a href="news.html" class="active">Новости</a></li>
+          <li><a href="currency.html">Курс валют</a></li>
+          <li><a href="contacts.html">Контактные данные</a></li>
+          <li><a href="video.html">Видео</a></li>
+      </ul>
+  </nav>
+
+    <!-- Main content -->
+    <main>
+        <!-- Contacts Section -->
+        <section class="contacts-section">
+            <div class="container">
+                <h2 class="section-title">Контактные данные</h2>
+
+                <div class="contacts-container">
+                    <div class="contacts-info">
+                        <div class="contact-block">
+                            <h3 class="contact-title">Офис</h3>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h4>Адрес</h4>
+                                    <p>109029, г. Москва, вн.тер.г. Муниципальный Округ Нижегородский, ул Средняя Калитниковская, д. 28, стр. 4</p>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h4>Email</h4>
+                                    <p><a href="mailto:info@x5.ru">info@x5.ru</a></p>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h4>Часы работы</h4>
+                                    <p>Пн-Пт: 9:00 - 18:00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-block">
+                            <h3 class="contact-title">Пресс-центр</h3>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h4>Telegram</h4>
+                                    <p><a href="tel:+74956491940">https://t.me/x5news</a></p>
+                                </div>
+                            </div>
+
+                        <div class="contact-block">
+                            <h3 class="contact-title">Корпоративный центр</h3>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h4>Телефон</h4>
+                                    <p><a href="tel:+74956628888">+7 (495) 662 88 88</a></p>
+                                    <p><a href="tel:+74957899595">+7 (495) 789 95 95</a></p>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h4>Email</h4>
+                                    <p><a href="mailto:ir@x5.ru">info@x5.ru</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="map-container">
+                        <iframe class="map-iframe" src="https://yandex.ru/map-widget/v1/?um=constructor%3A1f7a8c1b1b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8b8&amp;source=constructor" frameborder="0"></iframe>
+                    </div>
+                </div>
+
+                <!-- Feedback Form -->
+                <div class="feedback-section">
+                    <h3 class="feedback-title">Форма обратной связи</h3>
+                    <form class="feedback-form" id="contactForm">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Имя</label>
+                            <input type="text" id="name" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email</label>
+                            <input type="email" id="email" class="form-input" required>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label class="form-label" for="subject">Тема</label>
+                            <input type="text" id="subject" class="form-input" required>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label class="form-label" for="message">Сообщение</label>
+                            <textarea id="message" class="form-textarea" required></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-button">Отправить сообщение</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Back to top button -->
+        <a href="#" class="back-to-top">↑</a>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+          <div class="footer-logo">
+              <img src="images/x5-logo.png" alt="X5 Group Logo">
+          </div>
+
+          <div class="footer-contacts">
+              <div class="contact-item">
+                  <h4>Адрес</h4>
+                  <p>109029, г. Москва, вн.тер.г. Муниципальный Округ Нижегородский, ул Средняя Калитниковская, д. 28, стр. 4</p>
+              </div>
+
+              <div class="contact-item">
+                  <h4>Телефон</h4>
+                  <p><a href="tel:+74956628888">+7 (495) 662 88 88</a></p>
+                  <p><a href="tel:+74957899595">+7 (495) 789 95 95</a></p>
+              </div>
+
+              <div class="contact-item">
+                  <h4>Email</h4>
+                  <p><a href="mailto:info@x5.ru">info@x5.ru</a></p>
+              </div>
+          </div>
+
+          <div class="copyright">
+              © 2025 X5 Retail Group. Все права защищены.
+          </div>
+      </div>
+  </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            menuToggle.textContent = mainNav.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Close menu when clicking on a link
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                menuToggle.textContent = '☰';
+            });
+        });
+
+        // Highlight current page in navigation
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        navLinks.forEach(link => {
+            const linkPage = link.getAttribute('href');
+            if (currentPage === linkPage) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        // Кнопка "Наверх"
+        document.querySelector('.back-to-top').addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            alert('Спасибо за обращение! Мы свяжемся с вами в ближайшее время.');
+            contactForm.reset();
+        });
+    </script>
+</body>
+</html>
