@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреева Ирина Александровна. Курс евро</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-48x48.png">
+    <style>
+        .exchange-info {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 600px;
+            border: 1px solid #3f3b28;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
+        }
+        .exchange-header {
+            color: #2c3e50;
+            border-bottom: 2px solid #3f3629;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .rate-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+        .rate-difference {
+            font-size: 18px;
+            margin: 10px 0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .positive {
+            color: #27ae60;
+            background-color: #e8f8f5;
+        }
+        .negative {
+            color: #e74c3c;
+            background-color: #fdedec;
+        }
+        .neutral {
+            color: #7f8c8d;
+        }
+        .date-info {
+            color: #7f8c8d;
+            font-style: italic;
+            margin: 10px 0;
+        }
+        .source-link {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px dashed #bdc3c7;
+            font-size: 14px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #43392b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #523a2b;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, Лабораторная 7
+    </header>
+
+    <main>
+        <button class="btn" onclick="getEuroExchangeRate()">Получить курс обмена евро</button>
+        <div id="exchange-result"></div>
+    </main>
+
+    <footer>
+        &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
+    </footer>
+
+    <script>
+        function getEuroExchangeRate() {
+            const url = 'https://www.cbr-xml-daily.ru/daily_json.js';
+            fetch(url)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(json){
+                displayEuroRate(json);
+            })
+            .catch(function(error) {
+                document.getElementById('exchange-result').innerHTML = `
+                    <div class="exchange-info">
+                        <p>Ошибка при получении данных: ${error.message}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function displayEuroRate(data) {
+            const eur = data.Valute.EUR;
+            const currentRate = eur.Value.toFixed(4);
+            const previousRate = eur.Previous.toFixed(4);
+            const difference = (eur.Value - eur.Previous).toFixed(4);
+
+            let differenceText = '';
+            let differenceClass = '';
+
+            if (difference > 0) {
+                differenceText = `+${difference} (курс вырос)`;
+                differenceClass = 'positive';
+            } else if (difference < 0) {
+                differenceText = `${difference} (курс снизился)`;
+                differenceClass = 'negative';
+            } else {
+                differenceText = '0.0000 (без изменений)';
+                differenceClass = 'neutral';
+            }
+
+            const requestDate = new Date(data.Date).toLocaleString('ru-RU');
+            const previousDate = new Date(data.PreviousDate).toLocaleString('ru-RU');
+
+            document.getElementById('exchange-result').innerHTML = `
+                <div class="exchange-info">
+                    <h2 class="exchange-header">Курс евро ЦБ РФ</h2>
+                    <div class="rate-value">1 EUR = ${currentRate} RUB</div>
+
+                    <div class="date-info">
+                        <p><strong>Дата запроса:</strong> ${requestDate}</p>
+                        <p><strong>Предыдущее обновление:</strong> ${previousDate}</p>
+                    </div>
+
+                    <div class="rate-difference ${differenceClass}">
+                        <strong>Изменение:</strong> ${differenceText}
+                    </div>
+
+                    <div class="date-info">
+                        <p><strong>Предыдущий курс:</strong> ${previousRate} RUB</p>
+                    </div>
+
+                    <div class="source-link">
+                        <p>Данные предоставлены <a href="https://www.cbr-xml-daily.ru/" target="_blank">Центральным Банком РФ</a></p>
+                        <p>Условия использования: информация предоставляется без гарантий и может использоваться свободно</p>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
