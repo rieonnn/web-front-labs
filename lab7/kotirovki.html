@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреева Ирина Александровна. Котировки акций компании
+        "Объединенная авиастроительная корпорация"</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-48x48.png">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: beige;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #242526;
+            padding-bottom: 10px;
+        }
+        .btn {
+            display: block;
+            width: 300px;
+            margin: 20px auto;
+            padding: 12px;
+            background-color: #3e3126;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #4d5154;
+        }
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 16px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        .stock-table th {
+            background-color: #503f2c;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-weight: 600;
+        }
+        .stock-table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        .stock-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .stock-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .positive {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .negative {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .stats {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+        .stats h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 10px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .stat-item p:first-child {
+            font-weight: bold;
+            color: #515557;
+            margin-bottom: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+        .date-col {
+            font-weight: 500;
+        }
+        .price-col {
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+
+    <script>
+        // Данные для акций ОАК (примерные данные)
+        const stockDates = [
+            "06.05.2025", "07.05.2025", "08.05.2025", "12.05.2025",
+            "13.05.2025", "14.05.2025", "15.05.2025", "16.05.2025",
+            "19.05.2025"
+        ];
+
+        const stockPrices = [
+            0.5940, 0.5960, 0.5950, 0.6120,
+            0.6125, 0.6100, 0.6130, 0.6095,
+            0.6115
+        ];
+
+        function showStocks() {
+            const table = document.getElementById('stocks-table');
+            const tableBody = table.querySelector('tbody');
+            tableBody.innerHTML = '';
+
+            let sum = 0;
+            let min = stockPrices[0];
+            let max = stockPrices[0];
+
+            for (let i = 0; i < stockPrices.length; i++) {
+                const tr = document.createElement('tr');
+
+                // Дата
+                const tdDate = document.createElement('td');
+                tdDate.className = 'date-col';
+                tdDate.innerText = stockDates[i];
+                tr.appendChild(tdDate);
+
+                // Цена
+                const tdPrice = document.createElement('td');
+                tdPrice.className = 'price-col';
+                tdPrice.innerText = stockPrices[i].toFixed(4);
+                tr.appendChild(tdPrice);
+
+                // Разница
+                const tdDiff = document.createElement('td');
+                tdDiff.className = 'price-col';
+                if (i > 0) {
+                    const diff = stockPrices[i] - stockPrices[i-1];
+                    const diffFormatted = diff.toFixed(4);
+
+                    if (diff > 0) {
+                        tdDiff.className += ' positive';
+                        tdDiff.innerText = '+' + diffFormatted;
+                    } else if (diff < 0) {
+                        tdDiff.className += ' negative';
+                        tdDiff.innerText = diffFormatted;
+                    } else {
+                        tdDiff.innerText = '0.0000';
+                    }
+                } else {
+                    tdDiff.innerText = '-';
+                }
+                tr.appendChild(tdDiff);
+
+                tableBody.appendChild(tr);
+
+                // Статистика
+                sum += stockPrices[i];
+                if (stockPrices[i] < min) min = stockPrices[i];
+                if (stockPrices[i] > max) max = stockPrices[i];
+            }
+
+            const average = sum / stockPrices.length;
+
+            // Обновление статистики
+            document.getElementById('avg-price').textContent = average.toFixed(4);
+            document.getElementById('min-price').textContent = min.toFixed(4);
+            document.getElementById('max-price').textContent = max.toFixed(4);
+
+            // Показываем таблицу и статистику
+            table.classList.remove('hidden');
+            document.getElementById('stocks-detail').classList.remove('hidden');
+
+            // Скрываем кнопку
+            document.querySelector('.btn').classList.add('hidden');
+        }
+    </script>
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, Лабораторная 7
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Курс акций ПАО "Объединённая авиастроительная корпорация"</h1>
+
+            <button class="btn" onclick="showStocks()">Курс акций ОАК</button>
+
+            <table class="stock-table hidden" id="stocks-table">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Цена акций, ₽</th>
+                        <th>Изменение, ₽</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <div class="stats hidden" id="stocks-detail">
+                    <h3>Статистика по котировкам</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <p>Средняя цена</p>
+                            <p id="avg-price">-</p>
+                        </div>
+                        <div class="stat-item">
+                            <p>Минимальная цена</p>
+                            <p id="min-price">-</p>
+                        </div>
+                        <div class="stat-item">
+                            <p>Максимальная цена</p>
+                            <p id="max-price">-</p>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
