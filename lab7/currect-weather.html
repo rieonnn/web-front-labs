@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреева Ирина Александровна. Текущая погода</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-48x48.png">
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .current-weather {
+            background-color: #e3f2fd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .current-item {
+            text-align: center;
+        }
+        .current-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #394148;
+        }
+        .current-label {
+            color: #555;
+        }
+        .chart-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .chart-title {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #666;
+        }
+        .error {
+            color: #d32f2f;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, Лабораторная 7
+    </header>
+
+    <main>
+        <div class="header">
+            <h1>Погода в Новосибирске</h1>
+            <p>Прогноз на сегодня и фактические данные за вчера</p>
+        </div>
+
+        <div id="currentWeather" class="current-weather">
+            <div class="loading">Загрузка текущих данных...</div>
+        </div>
+
+        <div class="chart-container">
+            <h2 class="chart-title">Прогноз температуры на сегодня</h2>
+            <canvas id="forecastChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h2 class="chart-title">Фактическая температура за вчера</h2>
+            <canvas id="actualChart"></canvas>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Координаты Новосибирска
+            const latitude = 55.0415;
+            const longitude = 82.9346;
+            const timezone = "Asia%2FBangkok";
+
+            // Получаем даты: сегодня и вчера
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+
+            const todayStr = today.toISOString().split('T')[0];
+            const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+            // 1. Запрос текущей погоды (температура и влажность)
+            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m&timezone=${timezone}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayCurrentWeather(data.current);
+                })
+                .catch(error => {
+                    console.error('Ошибка при получении текущих данных:', error);
+                    document.getElementById('currentWeather').innerHTML = '<div class="error">Не удалось загрузить текущие данные о погоде</div>';
+                });
+
+            // 2. Запрос прогноза на сегодня
+            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&start_date=${todayStr}&end_date=${todayStr}&timezone=${timezone}`)
+                .then(response => response.json())
+                .then(data => {
+                    createForecastChart(data.hourly);
+                })
+                .catch(error => {
+                    console.error('Ошибка при получении прогноза:', error);
+                    document.querySelector('#forecastChart').parentElement.innerHTML += '<div class="error">Не удалось загрузить прогноз температуры</div>';
+                });
+
+            // 3. Запрос фактических данных за вчера
+            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&start_date=${yesterdayStr}&end_date=${yesterdayStr}&timezone=${timezone}`)
+                .then(response => response.json())
+                .then(data => {
+                    createActualChart(data.hourly);
+                })
+                .catch(error => {
+                    console.error('Ошибка при получении фактических данных:', error);
+                    document.querySelector('#actualChart').parentElement.innerHTML += '<div class="error">Не удалось загрузить фактические данные температуры</div>';
+                });
+
+            // Функция для отображения текущей погоды
+            function displayCurrentWeather(current) {
+                const currentWeatherDiv = document.getElementById('currentWeather');
+
+                if (!current || !current.temperature_2m || !current.relative_humidity_2m) {
+                    currentWeatherDiv.innerHTML = '<div class="error">Текущие данные о погоде недоступны</div>';
+                    return;
+                }
+
+                currentWeatherDiv.innerHTML = `
+                    <div class="current-item">
+                        <div class="current-label">Текущая температура</div>
+                        <div class="current-value">${current.temperature_2m} °C</div>
+                    </div>
+                    <div class="current-item">
+                        <div class="current-label">Влажность</div>
+                        <div class="current-value">${current.relative_humidity_2m}%</div>
+                    </div>
+                    <div class="current-item">
+                        <div class="current-label">Дата</div>
+                        <div class="current-value">${today.toLocaleDateString('ru-RU')}</div>
+                    </div>
+                    <div class="current-item">
+                        <div class="current-label">Время</div>
+                        <div class="current-value">${today.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'})}</div>
+                    </div>
+                `;
+            }
+
+            // Функция для создания графика прогноза
+            function createForecastChart(hourlyData) {
+                if (!hourlyData || !hourlyData.time || !hourlyData.temperature_2m) {
+                    throw new Error('Недостаточно данных для построения графика прогноза');
+                }
+
+                const times = hourlyData.time.map(time => {
+                    const date = new Date(time);
+                    return date.getHours() + ':00';
+                });
+
+                const temps = hourlyData.temperature_2m;
+
+                const ctx = document.getElementById('forecastChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: times,
+                        datasets: [{
+                            label: 'Температура (°C)',
+                            data: temps,
+                            backgroundColor: 'rgba(65, 105, 225, 0.7)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                title: {
+                                    display: true,
+                                    text: 'Температура (°C)'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Время (часы)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: `Прогноз температуры на ${today.toLocaleDateString('ru-RU')}`
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Функция для создания графика фактических данных
+            function createActualChart(hourlyData) {
+                if (!hourlyData || !hourlyData.time || !hourlyData.temperature_2m) {
+                    throw new Error('Недостаточно данных для построения графика фактических данных');
+                }
+
+                const times = hourlyData.time.map(time => {
+                    const date = new Date(time);
+                    return date.getHours() + ':00';
+                });
+
+                const temps = hourlyData.temperature_2m;
+
+                const ctx = document.getElementById('actualChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: times,
+                        datasets: [{
+                            label: 'Температура (°C)',
+                            data: temps,
+                            backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                title: {
+                                    display: true,
+                                    text: 'Температура (°C)'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Время (часы)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: `Фактическая температура за ${yesterday.toLocaleDateString('ru-RU')}`
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+    <footer>
+        &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
