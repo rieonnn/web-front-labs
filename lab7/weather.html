@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреева Ирина Александровна. Прогноз погоды</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-48x48.png">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .weather-container {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .weather-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .time {
+            font-weight: bold;
+        }
+        .temp {
+            color: #2c3e50;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, Лабораторная 7
+    </header>
+
+    <main>
+        <h1>Прогноз температуры в Новосибирске</h1>
+        <p>Температура на сегодня:</p>
+
+        <div id="weather" class="weather-container">
+            <div class="loading">Загрузка данных...</div>
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Координаты Новосибирска
+            const latitude = 55.0415;
+            const longitude = 82.9346;
+
+            // Формируем URL для запроса
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&timezone=Asia%2FBangkok`;
+
+            // Получаем данные
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    displayWeather(data);
+                })
+                .catch(error => {
+                    console.error('Ошибка при получении данных:', error);
+                    document.getElementById('weather').innerHTML = '<div class="error">Не удалось загрузить данные о погоде. Пожалуйста, попробуйте позже.</div>';
+                });
+
+            function displayWeather(data) {
+                const weatherContainer = document.getElementById('weather');
+
+                // Проверяем, есть ли нужные данные
+                if (!data.hourly || !data.hourly.time || !data.hourly.temperature_2m) {
+                    weatherContainer.innerHTML = '<div class="error">Данные о погоде недоступны в полученном ответе.</div>';
+                    return;
+                }
+
+                // Получаем текущую дату в формате YYYY-MM-DD
+                const today = new Date().toISOString().split('T')[0];
+
+                // Находим индексы для 8:00, 12:00 и 20:00 сегодня
+                const times = data.hourly.time;
+                const temps = data.hourly.temperature_2m;
+
+                const targetTimes = [
+                    { display: '8:00 утра', hour: '08:00' },
+                    { display: '12:00 дня', hour: '12:00' },
+                    { display: '20:00 вечера', hour: '20:00' }
+                ];
+
+                let weatherHTML = '';
+
+                targetTimes.forEach(target => {
+                    const fullTime = `${today}T${target.hour}`;
+                    const index = times.indexOf(fullTime);
+
+                    if (index !== -1) {
+                        const temp = temps[index];
+                        weatherHTML += `
+                            <div class="weather-item">
+                                <span class="time">${target.display}</span>
+                                <span class="temp">${temp} °C</span>
+                            </div>
+                        `;
+                    } else {
+                        weatherHTML += `
+                            <div class="weather-item">
+                                <span class="time">${target.display}</span>
+                                <span class="temp">данные недоступны</span>
+                            </div>
+                        `;
+                    }
+                });
+
+                weatherContainer.innerHTML = weatherHTML;
+            }
+        });
+    </script>
+
+    <footer>
+        &copy; Ирина Андреева, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
